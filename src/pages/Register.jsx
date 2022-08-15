@@ -78,9 +78,9 @@ const Register = ({handleRegister}) => {
           {/* new user */}
           <div>
             <p>
-              New Ocra Enjoyer{" "}
-              <Link to="/register" className="link link-primary">
-                Create Account
+              Already have an account?{" "}
+              <Link to="/auth/login" className="link link-primary">
+                Login instead 
               </Link>
             </p>
           </div>

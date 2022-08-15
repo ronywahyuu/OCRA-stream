@@ -17,7 +17,7 @@ import Login from './pages/Login';
 
 function App() {
   const [iconColor, setIconColor] = useState('white');
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
 
   const handleRegister = (fullName, email, password, confirmPassword) => {
@@ -81,8 +81,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/video/1" element={<Video iconColor={iconColor} />} />
             <Route path="/feed/history" element={<History />} />
-            <Route path="/login" element={<Login handleLogin={handleLogin} />} />
-            <Route path="/register" element={<Register handleRegister={handleRegister} />}
+            <Route path="/auth/login" element={<Login handleLogin={handleLogin} />} />
+            <Route path="/auth/register" element={<Register handleRegister={handleRegister} />}
             />
           </Routes>
         </div>

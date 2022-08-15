@@ -19,7 +19,7 @@ const Login = ({ handleLogin }) => {
       <div className="modal-box">
         <div className="flex justify-center flex-col items-center">
           <img src={logo} alt="" />
-          <h3 className="font-bold text-lg">Create a new account</h3>
+          <h3 className="font-bold text-lg">Sign In to OCRA</h3>
         </div>
 
         <form
@@ -50,7 +50,7 @@ const Login = ({ handleLogin }) => {
           <div>
             <p>
               New Ocra Enjoyer{" "}
-              <Link to="/register" className="link link-primary">
+              <Link to="/auth/register" className="link link-primary">
                 Create Account
               </Link>
             </p>
