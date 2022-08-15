@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../img/logo.png";
 const Register = ({handleRegister}) => {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+
     const handleOnSubmit=(e)=>{
         e.preventDefault();
-        handleRegister()
+        handleRegister(fullName, email, password, confirmPassword);
     }
+
+
+
     return (
     <div className=" flex justify-center" id="">
       <div className="modal-box">
@@ -23,22 +32,24 @@ const Register = ({handleRegister}) => {
           <div className="flex gap-2 w-full">
             <input
               type="text"
-              placeholder="First Name"
-              className="input input-bordered input-secondary w-full max-w-xs"
+              placeholder="Full Name"
+              className="input input-bordered input-secondary w-full "
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
             />
-            <input
+            {/* <input
               type="text"
               placeholder="Last Name"
               className=" input input-bordered input-secondary w-full max-w-xs"
-              
-            />
+            /> */}
           </div>
           <div className="flex w-full gap-2">
             <input
               type="email"
               placeholder="Email"
               className="input input-bordered input-secondary w-full "
-              
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
            
           </div>
@@ -47,7 +58,8 @@ const Register = ({handleRegister}) => {
               type="password"
               placeholder="Password"
               className="input input-bordered input-secondary w-full "
-              
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="flex gap-2 w-full">
@@ -55,7 +67,8 @@ const Register = ({handleRegister}) => {
               type="password"
               placeholder="Confirm Password"
               className="input input-bordered input-secondary w-full "
-              
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
           <button type="submit" className="btn btn-primary">

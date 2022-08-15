@@ -1,26 +1,25 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../img/logo.png";
-const LoginModal = ({handleLogin}) => {
+import logo from "../img/logo.png";
+const Login = ({ handleLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLogin(email, password);
-    // console.log(email, password);
-  }
+    handleLogin(email, password)
+    // handleRegister(fullName, email, password, confirmPassword);
+  };
+
+//   const cookies = new Cookies();
+//   cookies.set('session-id', {}, { path: '/' });
+
   return (
-    <div className="modal rounded-lg" id="loginModal">
+    <div className=" flex justify-center" id="">
       <div className="modal-box">
-        <div className="modal-action">
-          <a href="#" className="">
-            x
-          </a>
-        </div>
         <div className="flex justify-center flex-col items-center">
           <img src={logo} alt="" />
-          <h3 className="font-bold text-lg">Log in to your account!</h3>
+          <h3 className="font-bold text-lg">Create a new account</h3>
         </div>
 
         <form
@@ -30,8 +29,8 @@ const LoginModal = ({handleLogin}) => {
           onSubmit={handleSubmit}
         >
           <input
-            type="email"
-            placeholder="Email"
+            type="text"
+            placeholder="username"
             className="input input-bordered input-secondary w-full max-w-xs"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -58,13 +57,13 @@ const LoginModal = ({handleLogin}) => {
           </div>
         </form>
         {/* <h3 className="font-bold text-lg">Congratulations random Internet user!</h3>
-        <p className="py-4">
-          You've been selected for a chance to get one year of subscription to
-          use Wikipedia for free!
-        </p> */}
+      <p className="py-4">
+        You've been selected for a chance to get one year of subscription to
+        use Wikipedia for free!
+      </p> */}
       </div>
     </div>
   );
 };
 
-export default LoginModal;
+export default Login;
