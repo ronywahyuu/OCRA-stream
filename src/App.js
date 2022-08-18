@@ -14,6 +14,8 @@ import Register from './pages/Register';
 import axios from 'axios';
 import LoginModal from './components/auth/LoginModal';
 import Login from './pages/Login';
+import Tes from './components/Tes';
+import UserChannel from './pages/UserChannel';
 
 function App() {
   const [iconColor, setIconColor] = useState('white');
@@ -48,9 +50,9 @@ function App() {
     try {
       console.log(email, password)
       const res = () => {
-        axios.post('/auth/signin', {name: email, password: password},{
+        axios.post('/auth/signin', { name: email, password: password }, {
           withCredentials: true,
-          headers: {'Content-Type': 'application/json'}
+          headers: { 'Content-Type': 'application/json' }
         })
           .then(function (response) {
             console.log(response.headers);
@@ -60,9 +62,6 @@ function App() {
             console.log(error);
           });
       }
-
-
-
       res();
 
     } catch (err) {
@@ -78,12 +77,19 @@ function App() {
             iconColor={iconColor}
             isLogin={isLogin} />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/video/1" element={<Video iconColor={iconColor} />} />
-            <Route path="/feed/history" element={<History />} />
-            <Route path="/auth/login" element={<Login handleLogin={handleLogin} />} />
-            <Route path="/auth/register" element={<Register handleRegister={handleRegister} />}
-            />
+            <Route path="/">
+              <Route index element={<Home />} />
+              <Route path="/video1" element={<Video />} />
+              <Route path="/feed/history" element={<History />} />
+              <Route path="/auth/login" element={<Login handleLogin={handleLogin} />} />
+              <Route path="/auth/register" element={<Register handleRegister={handleRegister} />} />
+              <Route path="video">
+                <Route path=":id" element={<Video />} />
+                <Route path="c/:channelName" element={<UserChannel />} />
+              </Route>
+              <Route path="video/channel1" element={<UserChannel />} />
+
+            </Route>
           </Routes>
         </div>
       </main>

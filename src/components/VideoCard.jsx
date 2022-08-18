@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import TimeAgo from "javascript-time-ago";
 import axios from "axios";
 
 const VideoCard = ({ video, channel }) => {
+  const params = useParams()
   const en = require("javascript-time-ago/locale/en");
 
   TimeAgo.addLocale(en);
@@ -12,18 +13,18 @@ const VideoCard = ({ video, channel }) => {
 
 
 
-  const [videoDetail, setVideoDetail] = useState([])
-
+  // console.log(video, channel)
   // const fetchDetail = async () =>{
   //   await axios.get('/video?id=qtUhUPquCDF')
   //     .then((res)=>{
   //       console.log(res)
   //     })
   // }
+  console.log(video)
 
-  // console.log(video)
+  console.log(channel)
   return (
-    <Link to="/video/1">
+    <Link to={`video/${video.videoId}`}>
       <div className="card card-compact w-80 bg-base-100 shadow-xl mt-6 duration-200 hover:scale-110 cursor-pointer">
         <figure className="relative">
           <img src={video.videothumbnail} className="w-96 h-48" alt="Shoes" />
@@ -41,17 +42,14 @@ const VideoCard = ({ video, channel }) => {
           <div className="detail-video">
             <h2 className="card-title">{video.videoTitle}</h2>
             <div className="info">
-              <p className="text-slate-400">{channel.channelName}</p>
+              <Link to={`video/c/${channel.channelName}`}>
+                <p className="text-slate-400 hover:text-sky-700">{channel.channelName}</p>
+              </Link>
               <p className="text-slate-400">
-                {video.viewsCount} views | {timeAgo.format(new Date(video.createdAt))}
+                {video.viewsCount} views | {timeAgo.format(new Date(Number(video.createdAt)))}
               </p>
             </div>
           </div>
-          {/* <h2 className="card-title">Shoes!</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div className="card-actions justify-end">
-          <button className="btn btn-primary">Buy Now</button>
-        </div> */}
         </div>
       </div>
     </Link>

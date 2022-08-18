@@ -25,11 +25,11 @@ const Sidebar = ({ iconColor }) => {
           </div>
         </li>
         <li>
-          <div
-            className="tooltip tooltip-primary tooltip-right"
-            data-tip="History"
-          >
-            <Link to="/feed/history">
+          <Link to="/feed/history">
+            <div
+              className="tooltip tooltip-primary tooltip-right"
+              data-tip="History"
+            >
               <svg
                 className="h-5 w-5"
                 viewBox="0 0 46 46"
@@ -41,11 +41,14 @@ const Sidebar = ({ iconColor }) => {
                   fill="white"
                 />
               </svg>
-            </Link>
-          </div>
+            </div>
+          </Link>
         </li>
         <li>
-          <div  className="tooltip tooltip-primary tooltip-right" data-tip="Subsscription">
+          <div
+            className="tooltip tooltip-primary tooltip-right"
+            data-tip="Subsscription"
+          >
             <a>
               <svg
                 className="h-5 w-5"

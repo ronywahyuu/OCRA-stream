@@ -1,15 +1,29 @@
-import React, { useRef } from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player/lazy";
+import { useParams } from "react-router-dom";
 import Banner from "../components/Banner";
 import Recommendation from "../components/Recommendation";
 import "./Player.css";
 
-const Video = ({ iconColor }) => {
+const Video = () => {
   const [liked, setLiked] = React.useState(true);
-
+  const [video, setVideo] = useState([])
   const videoRef = useRef(null);
-
-  console.log(videoRef);
+  let params = useParams()
+  
+  console.log(params)
+  useEffect(()=>{
+    const fetchSingleVid = async () =>{
+      await axios.get(`/video?video=${params.id}`)
+        .then((res)=>{
+          const {video} = res.data.data
+          // console.log(video)
+          setVideo(video)
+        })
+    }
+    fetchSingleVid()
+  },[])
   const video1 =
     "https://firebasestorage.googleapis.com/v0/b/uas-a80da.appspot.com/o/SawanoHiroyuki%5BnZk%5D-Aimer%20-%20S-ave%20ft.%20Aimer.mp4?alt=media&token=2ddb55e9-e172-4fc0-a7b9-3cd215245fc1";
   const video2 = "https://www.youtube.com/watch?v=pbMwTqkKSps";
@@ -24,7 +38,7 @@ const Video = ({ iconColor }) => {
               className="react-player"
               height= "500px"
               width= "1000px"
-              url={video3}
+              url={video.videoUrl}
               controls
               onClickPreview={() => console.log("clicked")}
             />
@@ -37,28 +51,28 @@ const Video = ({ iconColor }) => {
               allowfullscreen
             ></iframe>{" "} */}
           </div>
-          <div id="videDetailInfo" className="flex items-center ">
+          <div id="videoDetailInfo" className="flex items-center border">
             <div tabindex="0" class="collapse flex-1 ">
               <div class="collapse-title text-xl font-medium flex justify-between items-center">
-                <p>How to build web app</p>
+                <p>{video.videoTitle}</p>
                 <span className="text-slate-600 text-sm">Read More..</span>
               </div>
               <div class="collapse-content">
                 <p>
-                  tabindex="0" attribute is necessary to make the div focusable
+                  {video.videoDesc}
                 </p>
               </div>
             </div>
 
             <div
               id="videoDetailAction"
-              className="flex border justify-between gap-9"
+              className="flex  justify-between gap-9"
             >
               <div id="item" className="flex items-center">
-                <box-icon name="like" color="#ffffff"></box-icon> 2,1K
+                <box-icon name="like" color="#ffffff"></box-icon> {video.likesCount}
               </div>
               <div id="item" className="flex items-center">
-                <box-icon name="dislike" color="#ffffff"></box-icon> 10K
+                <box-icon name="dislike" color="#ffffff"></box-icon> {video.dislikesCount}
               </div>
               <div id="item" className="flex items-center">
                 <box-icon
