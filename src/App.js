@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import Home from './pages/Home';
@@ -7,7 +7,7 @@ import {
   Routes,
   Route
 } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Video from './pages/Video';
 import History from './pages/History';
 import Register from './pages/Register';
@@ -32,12 +32,12 @@ function App() {
           email: email,
           password: password
         })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
       }
 
       res();
@@ -50,17 +50,16 @@ function App() {
     try {
       console.log(email, password)
       const res = () => {
-        axios.post('/auth/signin', { name: email, password: password }, {
+        axios.post('/auth/signin', {name: email, password: password}, {
           withCredentials: true,
-          headers: { 'Content-Type': 'application/json' }
+          headers: {'Content-Type': 'application/json'}
         })
-          .then(function (response) {
-            console.log(response.headers);
-            // return window.location('/logins')
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+            .then(function (response) {
+              console.log(response.headers);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
       }
       res();
 
@@ -69,31 +68,31 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <main className="flex" >
-        <Sidebar />
-        <div className="flex flex-col flex-1">
-          <Navbar
-            iconColor={iconColor}
-            isLogin={isLogin} />
-          <Routes>
-            <Route path="/">
-              <Route index element={<Home />} />
-              <Route path="/video1" element={<Video />} />
-              <Route path="/feed/history" element={<History />} />
-              <Route path="/auth/login" element={<Login handleLogin={handleLogin} />} />
-              <Route path="/auth/register" element={<Register handleRegister={handleRegister} />} />
-              <Route path="video">
-                <Route path=":id" element={<Video />} />
-                <Route path="c/:channelName" element={<UserChannel />} />
-              </Route>
-              <Route path="video/channel1" element={<UserChannel />} />
+      <BrowserRouter>
+        <main className="flex">
+          <Sidebar/>
+          <div className="flex flex-col flex-1">
+            <Navbar
+                iconColor={iconColor}
+                isLogin={isLogin}/>
+            <Routes>
+              <Route path="/">
+                <Route index element={<Home/>}/>
+                <Route path="/video1" element={<Video/>}/>
+                <Route path="/feed/history" element={<History/>}/>
+                <Route path="/auth/login" element={<Login/>}/>
+                <Route path="/auth/register" element={<Register handleRegister={handleRegister}/>}/>
+                <Route path="video">
+                  <Route path=":id" element={<Video/>}/>
+                  <Route path="c/:channelId" element={<UserChannel/>}/>
+                </Route>
+                <Route path="video/channel1" element={<UserChannel/>}/>
 
-            </Route>
-          </Routes>
-        </div>
-      </main>
-    </BrowserRouter>
+              </Route>
+            </Routes>
+          </div>
+        </main>
+      </BrowserRouter>
   );
 }
 
