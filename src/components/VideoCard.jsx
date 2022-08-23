@@ -20,7 +20,7 @@ const VideoCard = ({video, channel}) => {
   //     })
   // }
 
-  console.log(channel)
+  // console.log(channel)
   return (
       <Link to={`video/${video?.videoId}`}>
         <div className="card card-compact w-80 bg-base-100 shadow-xl mt-6 duration-200 hover:scale-110 cursor-pointer">

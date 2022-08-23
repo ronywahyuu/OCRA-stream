@@ -1,32 +1,40 @@
 import axios from "axios";
 import React, {useState} from "react";
 import {useEffect} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import avatar from "../img/avatar-icon.svg"
 import VideoCard from "../components/VideoCard";
 import avataricon from "../img/avatar-channel.png";
 import Video from "./Video";
+import {useSelector} from "react-redux";
 
 const UserChannel = () => {
   const [channelData, setChannelData] = useState({});
   const [videoData, setVideoData] = useState({})
   const [isLoading, setIsLoading] = useState(true);
+  const [textBtn, setTextBtn] = useState('Subscribed')
+
+  const {currentUser} = useSelector((state) => state.user)
+
 
   const params = useParams();
-  console.log(params.channelId)
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUserChannel = () => {
-      axios
-          .get(`/channel?user=1qi8BqbRFfgodLvQSxswRW&page=1&limit=10&channel=${params.channelId}`)
+    const fetchUserChannel = async () => {
+      await axios
+          .get(`/channel?user=${currentUser?.userId}&page=1&limit=10&channel=${params.channelId}`)
           .then((res) => {
-            const {channel, videos} = res.data.data;
+            // console.log(res.data.data.isSubscribing)
+            const {channel, videos, isSubscribing} = res.data.data;
+            // console.log(isSubscribing)
             setIsLoading(false);
             setChannelData((prevState) => {
               return {
                 ...prevState,
                 channel,
-                videos
+                videos,
+                isSubscribing
               };
             });
             setVideoData(prevState => {
@@ -42,27 +50,51 @@ const UserChannel = () => {
           });
     };
     fetchUserChannel();
-  }, []);
+  }, [channelData]);
 
+  const handleSubscribe = async () => {
+    console.log(channelData)
+    try {
+      if (currentUser) {
+        await axios.post('/subs', {
+          channelId: channelData?.channel.channelId,
+          userId: currentUser?.userId
+        })
+            .then(res => console.log(res))
+      } else {
+        navigate("/auth/login")
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
-  // const renderedData = channelData.videos.map((video) => console.log(video))
-
-  // console.log(isLoading, channelData);
-
-  // console.log(channelData.videos, channelData.channel);
-
-  // console.log(channelData.videos)
-  console.log(channelData.channel)
+  const handleUnsubscribe = async () => {
+    await axios.post('/unsubs', {
+      channelId: channelData.channel.channelId,
+      userId: currentUser.userId
+    })
+        .then(res => console.log(res))
+  }
 
 
   const renderedVideos = channelData.videos?.map(v => {
     return <VideoCard video={v} channel={channelData.channel}/>
   })
-
-  console.log(renderedVideos)
-
-
   const channelImage = channelData.channel?.profileImage === null ? avataricon : channelData.channel?.profileImage
+
+  const renderButton = () => {
+    if (Number(currentUser?.channelId) !== Number(params.channelId)) {
+      if (channelData.isSubscribing === true) {
+        return <button className="btn btn-outline btn-error" onMouseLeave={() => setTextBtn("Subscribed")}
+                       onMouseEnter={() => setTextBtn('Unsubscribe')}
+                       onClick={handleUnsubscribe}>{textBtn}</button>
+      } else {
+        return <button className="btn bg-accent" onClick={handleSubscribe}>Subscribe</button>
+      }
+    }
+  }
+
   return (
       <>
         <div className="divide-y divide-slate-500">
@@ -75,9 +107,14 @@ const UserChannel = () => {
           </span>
               <h3 className="text-3xl font-bold text-white">{isLoading === false && channelData.channel.channelName}</h3>
               <p className="mb-3 text-slate-400">{isLoading === false && channelData.channel.subscriber} Subscribers</p>
-              <button className="btn bg-accent">Subscribe</button>
+              {renderButton()}
             </div>
-            <p className="uppercase text-xl text-white font-bold ml-3">Video</p>
+            {Number(currentUser?.channelId) !== Number(params.channelId) ? (
+                <p className="uppercase text-xl text-white font-bold ml-3">Video</p>
+            ) : (
+                <p className="uppercase text-xl text-white font-bold ml-3">My Video</p>
+            )
+            }
           </div>
 
           <div
@@ -90,6 +127,12 @@ const UserChannel = () => {
 
         <div className="content flex justify-around gap-2 items-center flex-wrap">
           {isLoading === false && renderedVideos}
+          {renderedVideos?.length === 0 && (
+              <div className=" mt-20">
+                <p className=" mb-5">Empty Video List</p>
+                <button className="btn btn-active btn-secondary">Upload New</button>
+              </div>
+          )}
         </div>
       </>
 

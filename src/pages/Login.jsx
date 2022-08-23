@@ -11,10 +11,10 @@ const Login = () => {
   const dispatch = useDispatch()
 
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleLogin(email, password);
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   handleLogin(email, password);
+  // };
 
 
   const handleLogin = (e) => {
@@ -35,7 +35,7 @@ const Login = () => {
               const {data} = response.data
               console.log(data);
               dispatch(successLogin(data))
-              // navigate("/");
+              navigate("/");
             })
             .catch(function (error) {
               dispatch(failedLogin())

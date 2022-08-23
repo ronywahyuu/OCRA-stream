@@ -6,14 +6,13 @@ import {logout} from "../../redux/userSlice";
 
 const LoginButton = () => {
   const {currentUser} = useSelector((state) => state.user)
-  console.log(currentUser)
 
   const dispatch = useDispatch()
-
   // const splitProfilenamePic = currentUser.fullName.toLowerCase().split(' ').map(name => name[0]).join('')
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout())
+    window.location.reload()
   }
   return (
       <>
@@ -25,7 +24,7 @@ const LoginButton = () => {
               <div className="avatar placeholder">
                 <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
                   {currentUser === null ? <span>NN</span> :
-                      <img src={currentUser.profilImage}/>}
+                      <img src={currentUser.profileImage}/>}
                 </div>
               </div>
               {" "}
@@ -43,10 +42,10 @@ const LoginButton = () => {
             </li>
             {currentUser !== null && (
                 <li>
-                  <a>
+                  <Link to={`video/c/${currentUser.channelId}`}>
                     <box-icon name='user-rectangle' type='solid' color='#ffffff'></box-icon>
                     Your Channel
-                  </a>
+                  </Link>
                 </li>
             )}
             <li>
