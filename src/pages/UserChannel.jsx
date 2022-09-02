@@ -7,6 +7,7 @@ import VideoCard from "../components/VideoCard";
 import avataricon from "../img/avatar-channel.png";
 import Video from "./Video";
 import {useSelector} from "react-redux";
+import uploadIllust from "../img/upload-illustration.svg"
 
 const UserChannel = () => {
   const [channelData, setChannelData] = useState({});
@@ -25,9 +26,8 @@ const UserChannel = () => {
       await axios
           .get(`/channel?user=${currentUser?.userId}&page=1&limit=10&channel=${params.channelId}`)
           .then((res) => {
-            // console.log(res.data.data.isSubscribing)
             const {channel, videos, isSubscribing} = res.data.data;
-            // console.log(isSubscribing)
+            console.log(res.data.data)
             setIsLoading(false);
             setChannelData((prevState) => {
               return {
@@ -50,7 +50,7 @@ const UserChannel = () => {
           });
     };
     fetchUserChannel();
-  }, [channelData]);
+  }, []);
 
   const handleSubscribe = async () => {
     console.log(channelData)
@@ -128,11 +128,26 @@ const UserChannel = () => {
         <div className="content flex justify-around gap-2 items-center flex-wrap">
           {isLoading === false && renderedVideos}
           {renderedVideos?.length === 0 && (
-              <div className=" mt-20">
-                <p className=" mb-5">Empty Video List</p>
-                <button className="btn btn-active btn-secondary">Upload New</button>
+              <div className=" mt-20 flex flex-col items-center">
+                <img src={uploadIllust} alt="" className="w-48"/>
+                <p className=" mb-5">Upload a video to get started</p>
+                <label htmlFor="my-modal-3" className="btn btn-active btn-secondary modal-button">Upload New</label>
+
+                {/*<button type="checkbox" className="btn btn-active btn-secondary ">Upload*/}
+                {/*  New*/}
+                {/*</button>*/}
               </div>
           )}
+        </div>
+
+        <input type="checkbox" id="my-modal-3" class="modal-toggle"/>
+        <div class="modal">
+          <div class="modal-box relative">
+            <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+            <h3 class="text-lg font-bold">Congratulations random Internet user!</h3>
+            <p class="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for
+              free!</p>
+          </div>
         </div>
       </>
 

@@ -1,0 +1,2 @@
+- history diambil dari tiap api call detail video, api call trigerred
+ketika video sudah berjalan sekian menit

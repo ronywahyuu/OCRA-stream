@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       await axios
-          .get("/videos?page=1&size=10", {
+          .get("/videos?page=1&size=100", {
             headers: {
               "Access-Control-Allow-Origin": "*",
             },

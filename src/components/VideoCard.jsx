@@ -11,6 +11,7 @@ const VideoCard = ({video, channel}) => {
 
   const timeAgo = new TimeAgo("en-US");
 
+  // const path = useLocation().pathname.split('/')[2]
 
   // console.log(video, channel)
   // const fetchDetail = async () =>{
@@ -22,7 +23,7 @@ const VideoCard = ({video, channel}) => {
 
   // console.log(channel)
   return (
-      <Link to={`video/${video?.videoId}`}>
+      <Link to={`/video/${video?.videoId}`}>
         <div className="card card-compact w-80 bg-base-100 shadow-xl mt-6 duration-200 hover:scale-110 cursor-pointer">
           <figure className="relative">
             <img src={video?.videothumbnail} className="w-96 h-48" alt="Shoes"/>
@@ -40,9 +41,13 @@ const VideoCard = ({video, channel}) => {
             <div className="detail-video">
               <h2 className="card-title">{video?.videoTitle}</h2>
               <div className="info">
-                <Link to={`video/c/${channel?.channelId}`}>
+
+                <div>
                   <p className="text-slate-400 hover:text-sky-700">{channel?.channelName}</p>
-                </Link>
+                </div>
+                {/*<Link to={`/video/c/${channel?.channelId}`}>*/}
+                {/*  <p className="text-slate-400 hover:text-sky-700">{channel?.channelName}</p>*/}
+                {/*</Link>*/}
                 <p className="text-slate-400">
                   {video?.viewsCount} views | {timeAgo.format(new Date(Number(video?.createdAt)))}
                 </p>

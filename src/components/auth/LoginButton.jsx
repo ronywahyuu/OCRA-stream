@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import LoginModal from "./LoginModal";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../../redux/userSlice";
+import {UserCircleIcon} from "@heroicons/react/outline";
 
 const LoginButton = () => {
   const {currentUser} = useSelector((state) => state.user)
@@ -23,7 +24,7 @@ const LoginButton = () => {
               {/*<box-icon aria-label="avatar-icon" name="user-circle" color="#ffffff"></box-icon>*/}
               <div className="avatar placeholder">
                 <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
-                  {currentUser === null ? <span>NN</span> :
+                  {currentUser === null ? <UserCircleIcon/> :
                       <img src={currentUser.profileImage}/>}
                 </div>
               </div>
@@ -34,12 +35,14 @@ const LoginButton = () => {
               tabIndex="0"
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
-            <li>
-              <Link to="/auth/login" className="">
-                <box-icon name="user" color="#eaeaea"></box-icon>
-                {currentUser === null ? "Sign In" : " Your Profile"}
-              </Link>
-            </li>
+            {currentUser === null && (
+                <li>
+                  <Link to="auth/login" className="">
+                    <box-icon name="user" color="#eaeaea"></box-icon>
+                    {currentUser === null ? "Sign In" : " Your Profile"}
+                  </Link>
+                </li>
+            )}
             {currentUser !== null && (
                 <li>
                   <Link to={`video/c/${currentUser.channelId}`}>
